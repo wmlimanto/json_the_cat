@@ -2,11 +2,20 @@ const request = require('request');
 const args = process.argv.slice(2);
 const breed = args[0];
 
-request(`https://api.thecatapi.com/v1/breeds/search?q=${breed}`, (error, response, body) => {
+let url = `https://api.thecatapi.com/v1/breeds/search?q=${breed}`;
+
+request(url, (error, response, body) => {
+  // edge case: request failed
   if (error) {
-    console.error(error);
+    console.log("URL is invalid!");
+    return;
+    // edge case: breed not found
+  } else if (body === '[]') {
+    console.log(`This breed is not found - please try again!`);
+    return;
   } else {
     const data = JSON.parse(body);
-    console.log(data[0]);
+    console.log(data[0].description);
+    return;
   }
 });

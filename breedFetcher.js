@@ -11,7 +11,7 @@ request(url, (error, response, body) => {
     return;
     // edge case: breed not found
   } else if (body === '[]') {
-    console.log(`This breed is not found - please try again!`);
+    console.log(`We can't find this breed - please try again!`);
     return;
   } else {
     const data = JSON.parse(body);
